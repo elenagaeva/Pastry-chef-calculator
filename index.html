@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Калькулятор себестоимости кондитерских изделий — рассчитайте цену торта, капкейков и других сладостей с учётом ингредиентов, упаковки и наценки.">
+  <title>Калькулятор кондитера — себестоимость и цена продажи</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/landing.css">
+  <script src="js/theme.js" defer></script>
+</head>
+<body>
+
+  <header class="site-header">
+    <a href="index.html" class="site-logo">
+      <span class="site-logo__icon" aria-hidden="true">🧁</span>
+      <span>Калькулятор кондитера</span>
+    </a>
+    <nav class="site-nav" aria-label="Основная навигация">
+      <a href="index.html" class="is-active">Главная</a>
+      <a href="calculator.html">Калькулятор</a>
+    </nav>
+  </header>
+
+  <main class="landing">
+
+    <section class="hero">
+      <span class="hero__badge">Бесплатный инструмент для домашних кондитеров</span>
+      <h1>Знайте точную себестоимость каждого изделия</h1>
+      <p class="hero__subtitle">
+        Калькулятор помогает учесть ингредиенты, упаковку, декор, производственные расходы, время работы и наценку — и получить рекомендуемую цену продажи.
+      </p>
+      <div class="hero__actions">
+        <a href="calculator.html" class="btn btn--primary">Открыть калькулятор</a>
+        <a href="#features" class="btn btn--secondary">Узнать возможности</a>
+      </div>
+    </section>
+
+    <section class="features" id="features">
+      <h2>Что учитывает калькулятор</h2>
+      <div class="features__grid">
+        <article class="feature-card">
+          <div class="feature-card__icon" aria-hidden="true">🥚</div>
+          <h3>Ингредиенты</h3>
+          <p>Цена упаковки, вес и количество использованного продукта — калькулятор сам пропорционально распределит стоимость.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-card__icon" aria-hidden="true">📦</div>
+          <h3>Упаковка и декор</h3>
+          <p>Коробки, ленты, топперы, посыпки — добавьте каждую позицию отдельно и видите итог по категориям.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-card__icon" aria-hidden="true">⚡</div>
+          <h3>Производственные расходы</h3>
+          <p>Коммунальные услуги, амортизация оборудования, транспорт, запас на потери и прочие расходники.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-card__icon" aria-hidden="true">⏱️</div>
+          <h3>Работа кондитера</h3>
+          <p>Укажите часы и ставку — стоимость труда войдёт в себестоимость и цену продажи.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="how-it-works" aria-labelledby="how-title">
+      <h2 id="how-title">Как это работает</h2>
+      <div class="steps">
+        <div class="step">
+          <h3>Опишите изделие</h3>
+          <p>Название, тип, количество штук в партии и общий вес.</p>
+        </div>
+        <div class="step">
+          <h3>Внесите расходы</h3>
+          <p>Ингредиенты, упаковку, декор и все сопутствующие затраты.</p>
+        </div>
+        <div class="step">
+          <h3>Нажмите «Рассчитать»</h3>
+          <p>Получите себестоимость партии, одной штуки, 100 г и цену с наценкой.</p>
+        </div>
+        <div class="step">
+          <h3>Корректируйте на лету</h3>
+          <p>После первого расчёта данные обновляются автоматически при изменении полей.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-block">
+      <h2>Готовы посчитать свой заказ?</h2>
+      <p>Откройте калькулятор — не нужна регистрация, всё работает прямо в браузере.</p>
+      <a href="calculator.html" class="btn btn--primary">Начать расчёт</a>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <p>Калькулятор кондитера · Проект для расчёта себестоимости сладостей</p>
+  </footer>
+
+  <button
+    type="button"
+    class="theme-toggle"
+    id="themeToggle"
+    aria-label="Переключить тему оформления"
+    title="Переключить тему"
+  >
+    <span class="theme-toggle__icon theme-toggle__icon--light" aria-hidden="true">☀️</span>
+    <span class="theme-toggle__icon theme-toggle__icon--dark" aria-hidden="true">🌙</span>
+  </button>
+
+</body>
+</html>

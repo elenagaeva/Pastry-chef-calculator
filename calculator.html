@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Рассчитайте себестоимость кондитерских изделий: ингредиенты, упаковка, наценка и цена продажи.">
+  <title>Калькулятор — себестоимость кондитерских изделий</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/calculator.css">
+  <script src="js/theme.js" defer></script>
+  <script src="js/calculator.js" defer></script>
+</head>
+<body>
+
+  <header class="site-header">
+    <a href="index.html" class="site-logo">
+      <span class="site-logo__icon" aria-hidden="true">🧁</span>
+      <span>Калькулятор кондитера</span>
+    </a>
+    <nav class="site-nav" aria-label="Основная навигация">
+      <a href="index.html">Главная</a>
+      <a href="calculator.html" class="is-active">Калькулятор</a>
+    </nav>
+  </header>
+
+  <main class="calculator-wrap">
+    <div class="calculator">
+
+      <h1>Калькулятор себестоимости кондитерских изделий</h1>
+
+      <p class="description">
+        Введите ингредиенты, упаковку, производственные расходы, время работы и наценку. Калькулятор рассчитает себестоимость всей партии, одной штуки, 100 граммов и рекомендуемую цену продажи.
+      </p>
+
+      <div class="section">
+        <h2>1. Основная информация</h2>
+
+        <div class="form-grid">
+          <div>
+            <label for="productName">Название изделия</label>
+            <input type="text" id="productName" placeholder="Например: шоколадный торт">
+          </div>
+
+          <div>
+            <label for="productType">Тип изделия</label>
+            <select id="productType">
+              <option value="Торт">Торт</option>
+              <option value="Пирожные">Пирожные</option>
+              <option value="Капкейки">Капкейки</option>
+              <option value="Эклеры">Эклеры</option>
+              <option value="Трайфлы">Трайфлы</option>
+              <option value="Печенье">Печенье</option>
+              <option value="Зефир">Зефир</option>
+              <option value="Другое">Другое</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="quantity">Количество изделий в партии</label>
+            <input type="number" id="quantity" placeholder="Например: 1 для торта или 12 для капкейков">
+          </div>
+
+          <div>
+            <label for="weight">Общий вес партии в граммах</label>
+            <input type="number" id="weight" placeholder="Например: 1800">
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>2. Ингредиенты</h2>
+
+        <p class="hint">
+          Для каждого ингредиента укажите цену упаковки, вес упаковки и количество, которое ушло на изделие. Например: сливки стоят 320 рублей за 500 г, использовано 300 г.
+        </p>
+
+        <div id="ingredientsList">
+          <div class="ingredient-row">
+            <input type="text" placeholder="Название ингредиента" class="ingredient-name">
+            <input type="number" placeholder="Цена упаковки" class="ingredient-price">
+            <input type="number" placeholder="Вес упаковки, г" class="package-weight">
+            <input type="number" placeholder="Использовано, г" class="used-weight">
+            <button class="delete-btn" onclick="deleteIngredient(this)">×</button>
+          </div>
+        </div>
+
+        <button class="add-btn" type="button" onclick="addIngredient()">Добавить ингредиент</button>
+      </div>
+
+      <div class="section">
+        <h2>3. Упаковка и декор</h2>
+
+        <h3>Упаковка</h3>
+        <p class="hint">Добавляйте каждую позицию отдельно: коробка, подложка, капсулы, стаканчики и другие расходники.</p>
+
+        <div id="packagingItems"></div>
+
+        <button class="add-btn" type="button" onclick="addCostItem('packaging')">+ Добавить упаковку</button>
+
+        <p class="cost-total">
+          Итого упаковка: <span id="packagingTotal">0 руб.</span>
+        </p>
+
+        <h3>Декор</h3>
+        <p class="hint">Добавляйте каждую позицию отдельно: лента, бирка, свечи, топперы, посыпки и другой декор.</p>
+
+        <div id="decorItems"></div>
+
+        <button class="add-btn" type="button" onclick="addCostItem('decor')">+ Добавить декор</button>
+
+        <p class="cost-total">
+          Итого декор: <span id="decorTotal">0 руб.</span>
+        </p>
+      </div>
+
+      <div class="section">
+        <h2>4. Производственные расходы</h2>
+
+        <div class="form-grid">
+          <div>
+            <label for="utilitiesCost" class="help-label">
+              Коммунальные расходы на заказ
+              <button type="button" class="help-btn" onclick="toggleHelp('utilitiesHelp')">?</button>
+            </label>
+
+            <div class="help-box" id="utilitiesHelp">
+              Укажите примерную сумму расходов на электричество, воду и газ для данной партии изделий. Если точная сумма неизвестна, используйте среднее значение, которое обычно приходится на один заказ.
+            </div>
+
+            <input type="number" id="utilitiesCost" placeholder="Например: 100">
+          </div>
+
+          <div>
+            <label for="depreciationCost" class="help-label">
+              Амортизация оборудования на заказ
+              <button type="button" class="help-btn" onclick="toggleHelp('depreciationHelp')">?</button>
+            </label>
+
+            <div class="help-box" id="depreciationHelp">
+              Амортизация — это постепенный износ оборудования и инвентаря. Формула: стоимость оборудования ÷ срок службы ÷ предполагаемое количество заказов за этот период. Например: миксер стоит 20 000 ₽, за 3 года планируется около 720 заказов. 20 000 ÷ 720 = 28 ₽ на заказ. Если используется несколько единиц оборудования, сложите полученные значения.
+            </div>
+
+            <input type="number" id="depreciationCost" placeholder="Например: 50">
+          </div>
+
+          <div>
+            <label for="transportCost" class="help-label">
+              Транспортные расходы
+              <button type="button" class="help-btn" onclick="toggleHelp('transportHelp')">?</button>
+            </label>
+
+            <div class="help-box" id="transportHelp">
+              Укажите расходы, связанные с доставкой ингредиентов, доставкой заказа клиенту, услугами курьера, такси, личным транспортом, бензином и другими перемещениями, необходимыми для выполнения заказа.
+            </div>
+
+            <input type="number" id="transportCost" placeholder="Например: 200">
+          </div>
+
+          <div>
+            <label for="lossPercent" class="help-label">
+              Запас на потери (%)
+              <button type="button" class="help-btn" onclick="toggleHelp('lossHelp')">?</button>
+            </label>
+
+            <div class="help-box" id="lossHelp">
+              Запас на потери учитывает возможный перерасход ингредиентов, технологический брак, повреждение изделий, ошибки при приготовлении и другие непредвиденные расходы. Для домашних кондитеров обычно используют значение от 3% до 10%.
+            </div>
+
+            <input type="number" id="lossPercent" placeholder="Например: 5">
+          </div>
+        </div>
+
+        <h3>
+          Прочие производственные расходы
+          <button type="button" class="help-btn" onclick="toggleHelp('otherExpensesHelp')">?</button>
+        </h3>
+
+        <div class="help-box" id="otherExpensesHelp">
+          Добавляйте расходы, которые не вошли в другие категории: перчатки, салфетки, бумажные полотенца, кондитерские мешки, пергамент, моющие средства и другие расходные материалы.
+        </div>
+
+        <div id="otherExpenseItems"></div>
+
+        <button class="add-btn" type="button" onclick="addCostItem('otherExpense')">+ Добавить расход</button>
+
+        <p class="cost-total">
+          Итого прочие расходы: <span id="otherExpenseTotal">0 руб.</span>
+        </p>
+      </div>
+
+      <div class="section">
+        <h2>5. Работа кондитера</h2>
+
+        <div class="form-grid">
+          <div>
+            <label for="hours">Сколько часов ушло на работу</label>
+            <input type="number" id="hours" placeholder="Например: 6">
+          </div>
+
+          <div>
+            <label for="hourRate">Стоимость одного часа работы</label>
+            <input type="number" id="hourRate" placeholder="Например: 500">
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>6. Наценка и округление</h2>
+
+        <div class="form-grid">
+          <div>
+            <label for="markupPercent">Желаемая наценка в процентах</label>
+            <input type="number" id="markupPercent" placeholder="Например: 30">
+          </div>
+
+          <div>
+            <label for="roundStep">Округлить цену продажи до</label>
+            <select id="roundStep">
+              <option value="1">Не округлять</option>
+              <option value="10">10 рублей</option>
+              <option value="50">50 рублей</option>
+              <option value="100">100 рублей</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <button class="calculate-btn" type="button" onclick="calculateCost()">Рассчитать себестоимость</button>
+      <button class="reset-btn" type="button" onclick="resetCalculator()">Очистить калькулятор</button>
+
+      <div class="error" id="errorBox"></div>
+
+      <div class="result" id="resultBox">
+        <h2>Результат расчёта</h2>
+
+        <div class="result-line">
+          <span>Изделие:</span>
+          <span id="resultProductName">-</span>
+        </div>
+
+        <div class="result-line">
+          <span>Тип изделия:</span>
+          <span id="resultProductType">-</span>
+        </div>
+
+        <div class="result-line">
+          <span>Стоимость ингредиентов:</span>
+          <span id="resultIngredientsCost">0 руб.</span>
+        </div>
+
+        <div class="result-line">
+          <span>Упаковка и декор:</span>
+          <span id="resultPackagingCost">0 руб.</span>
+        </div>
+
+        <div class="result-line">
+          <span>Производственные расходы:</span>
+          <span id="resultExtraCost">0 руб.</span>
+        </div>
+
+        <div class="result-line">
+          <span>Запас на потери:</span>
+          <span id="resultLossCost">0 руб.</span>
+        </div>
+
+        <div class="result-line">
+          <span>Стоимость работы:</span>
+          <span id="resultWorkCost">0 руб.</span>
+        </div>
+
+        <div class="result-line important-result">
+          <span>Себестоимость всей партии:</span>
+          <span id="resultTotalCost">0 руб.</span>
+        </div>
+
+        <div class="result-line">
+          <span>Себестоимость одной штуки:</span>
+          <span id="resultOneItemCost">0 руб.</span>
+        </div>
+
+        <div class="result-line">
+          <span>Себестоимость 100 г:</span>
+          <span id="resultOneHundredGramCost">0 руб.</span>
+        </div>
+
+        <div class="result-line important-result">
+          <span>Рекомендуемая цена продажи всей партии:</span>
+          <span id="resultSalePrice">0 руб.</span>
+        </div>
+
+        <div class="result-line">
+          <span>Рекомендуемая цена одной штуки:</span>
+          <span id="resultOneItemSalePrice">0 руб.</span>
+        </div>
+
+        <div class="result-line">
+          <span>Ориентировочная прибыль:</span>
+          <span id="resultProfit">0 руб.</span>
+        </div>
+      </div>
+
+      <div class="note">
+        Для торта можно указать количество изделий «1», а общий вес — вес торта. Для капкейков, пирожных или эклеров укажите количество штук в партии. Тогда калькулятор покажет себестоимость и цену одной штуки.
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <p>Калькулятор кондитера · <a href="index.html">На главную</a></p>
+  </footer>
+
+  <button
+    type="button"
+    class="theme-toggle"
+    id="themeToggle"
+    aria-label="Переключить тему оформления"
+    title="Переключить тему"
+  >
+    <span class="theme-toggle__icon theme-toggle__icon--light" aria-hidden="true">☀️</span>
+    <span class="theme-toggle__icon theme-toggle__icon--dark" aria-hidden="true">🌙</span>
+  </button>
+
+</body>
+</html>
